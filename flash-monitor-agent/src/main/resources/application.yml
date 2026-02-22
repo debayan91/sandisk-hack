@@ -1,0 +1,60 @@
+# Flash Monitor Agent - Configuration
+# All values are configurable; no hardcoded magic numbers.
+
+spring:
+  application:
+    name: flash-monitor-agent
+  main:
+    banner-mode: off
+
+# ── File Scanner ─────────────────────────────────────────────────
+monitor:
+  scan:
+    # Root directory to recursively scan (change to your preferred path)
+    root: ${user.home}
+    # Maximum directory depth (-1 = unlimited)
+    max-depth: 10
+    # File extensions to track (empty = all extensions)
+    tracked-extensions: []
+
+  # ── Disk Metrics ─────────────────────────────────────────────────
+  disk:
+    # Interval in milliseconds between disk metric collections
+    interval-ms: 10000
+
+  # ── I/O Metrics ──────────────────────────────────────────────────
+  io:
+    # Set true to simulate IOPS (required on macOS M1)
+    simulate: true
+    # Simulated baseline values
+    sim-read-iops-base: 1200
+    sim-write-iops-base: 800
+    sim-burst-write-rate-base: 2000
+    # Max jitter applied to simulated values (+/- percent)
+    sim-jitter-percent: 15
+
+  # ── SMART Metrics ────────────────────────────────────────────────
+  smart:
+    # Device path for smartctl (macOS NVMe)
+    device: /dev/disk0
+    # Full path to smartctl binary
+    smartctl-path: /usr/local/bin/smartctl
+
+  # ── Payload Sender ───────────────────────────────────────────────
+  send:
+    # Interval in milliseconds between JSON payloads
+    interval-ms: 15000
+    # Target URL of the Python Intelligence Core
+    endpoint: http://localhost:8000/ingest
+    # Connection timeout in milliseconds
+    connect-timeout-ms: 5000
+    # Read timeout in milliseconds
+    read-timeout-ms: 10000
+
+# ── Logging ──────────────────────────────────────────────────────
+logging:
+  level:
+    com.flashintel: DEBUG
+    root: INFO
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"

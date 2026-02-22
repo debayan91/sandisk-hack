@@ -1,0 +1,20 @@
+# Flash Dashboard — Configuration
+dashboard:
+  # URL of the Python Intelligence Core
+  api_base_url: "http://localhost:8000"
+  # Page auto-refresh interval in seconds (0 = disabled)
+  refresh_interval_seconds: 15
+  # Maximum archival candidates to display in the table
+  max_archival_rows: 15
+
+ui:
+  page_title: "Flash Intelligence Platform"
+  page_icon: "⚡"
+  layout: "wide"
+  # Color theme for gauges and charts
+  colors:
+    hot: "#FF4B4B"
+    warm: "#FFA500"
+    cold: "#00B4D8"
+    risk_low: "#00CC66"
+    risk_high: "#FF4B4B"
